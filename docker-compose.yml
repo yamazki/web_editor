@@ -1,0 +1,39 @@
+version: "3"
+services:
+  node:
+    image: node:9.6.0
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./node/:/node/
+    working_dir: /node
+    command: npm start
+    links:
+     - mongo
+    environment:
+     - VIRTUAL_HOST=web.localhost
+      
+  mongo:
+    container_name: mongo
+    image: mongo
+    ports:
+      - "27017:27017"
+    volumes:
+      - ./mongodb/:/data/db
+      
+  nginx-proxy:
+    image: jwilder/nginx-proxy
+    ports:
+      - 80:80
+    volumes:
+      - /var/run/docker.sock:/tmp/docker.sock:ro      
+     
+#  nginx:
+#    image: nginx
+#    ports:
+#      - "80:80"
+#    links: 
+#      - node
+#      - mongo
+#    volumes:
+#      - ./nginx/default.conf:/etc/nginx/conf.d/default.conf
