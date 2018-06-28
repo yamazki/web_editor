@@ -6,6 +6,7 @@ const assert = require('assert');
 const passport = require('passport'); 
 const collectionName = "user";
 
+      
 app.use(passport.initialize());
 
 module.exports = class UserManager  {
