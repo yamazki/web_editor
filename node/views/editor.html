@@ -1,0 +1,35 @@
+<script src="/socket.io/socket.io.js"></script>
+<script src='/js/ace/ace.js'></script>
+<script src='/js/ace/mode-javascript.js'></script>
+<script src='/js/ace/theme-twilight.js'></script>
+<script>
+  const socket = io();
+</script>
+
+</div>
+  <div id="editor" style="height: 600px"></div>
+  <script>
+    const editor = ace.edit("editor");
+    
+    const uploadEditorText = function () {
+      let editorText = editor.getValue();
+      socket.emit("text changed", editorText);
+      console.log(editorText);
+    }
+    
+    editor.on("change", uploadEditorText);
+    
+    socket.on ("text overwrite", function(overWriteText) {
+      const cursorPosition = editor.session.selection.toJSON();
+      editor.off("change", uploadEditorText);
+      editor.setValue(overWriteText.toString(),-1);
+      editor.session.selection.fromJSON(cursorPosition);
+      editor.on('change', uploadEditorText);
+    });
+    
+    
+    
+  </script>
+</div>
+
+
