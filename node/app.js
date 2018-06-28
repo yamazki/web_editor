@@ -13,9 +13,15 @@ let mongodbClient = new MongodbClient();
 
 app.get("/", function(req, res){
   res.sendFile(__dirname + "/views/index.html");
-  let firstConnectMessage = "new connect";
 });
 
+app.get("/editor", function(req, res){
+  res.sendFile(__dirname + "/views/editor.html");
+});
+
+app.get("/signup", function(req, res){
+  res.sendFile(__dirname + "/views/signup.html");
+});
   
 
 http.listen(3000, function () {
